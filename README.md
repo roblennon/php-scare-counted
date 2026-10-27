@@ -1,6 +1,7 @@
 # php-scare-counted
 
-Verification artifacts for **"The PHP scare, counted"** — a six-day
+Verification artifacts for **[How I replicated PHP2Shell, and 5 ways we got
+super lucky](https://lennonlabs.com/essays/PHP2Shell)** — a six-day
 source-and-measurement pass over the October 2026 PHP2Shell event
 (CVE-2026-109618 / CVE-2026-109619), its un-CVE'd `unserialize()` sibling,
 and the fleet that can't patch.
