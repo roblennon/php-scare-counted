@@ -1,0 +1,17 @@
+# Same tag, plus the fix: php-8.4.26 source + GH-24452 patch (08f4b64e0).
+# There is no official image that carries this fix — it is in no tagged
+# release. That absence is the entire point of this pair.
+FROM debian:bookworm-slim AS build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      autoconf bison build-essential curl libxml2-dev libsqlite3-dev \
+      re2c pkg-config ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /src
+RUN curl -fsSL https://museum.php.net/php8/php-8.4.26.tar.gz | tar xz --strip-components=1
+RUN curl -fsSL https://github.com/php/php-src/commit/08f4b64e0.patch -o fix.patch
+RUN ./configure --disable-all --enable-cli --disable-cgi --without-pear --disable-phpdbg \
+    && patch -p1 < fix.patch \
+    && make -j"$(nproc)" \
+    && make install-php
+FROM debian:bookworm-slim
+COPY --from=build /usr/local/bin/php /usr/local/bin/php
+COPY repro.php /repro.php

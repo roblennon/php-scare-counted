@@ -1,0 +1,4 @@
+# The tag build, unmodified. PHP 8.4.26 is a below-fix floor: it carries the
+# var_destroy reentrancy (public since 2026-05-02; fix GH-24452 unreleased).
+FROM php:8.4.26-cli
+COPY repro.php /repro.php
